@@ -1,5 +1,6 @@
 import db from '../../config/database.js';
 import { v4 } from 'uuid';
+import validator from '../middleware/validation.js';
 
 class Order {
     static async create(customer_email, items) {
@@ -73,6 +74,9 @@ class Order {
         }
 
         const currentStatus = orders[0].status;
+
+        // Проверяем валидность перехода статуса
+        validator.validateStatusTransition(currentStatus, status);
 
         // Обновляем статус
         const [result] = await db.execute(

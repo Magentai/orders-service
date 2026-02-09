@@ -43,7 +43,6 @@ const OrderUpdateForm = () => {
     const handleUpdate = async (event) => {
         event.preventDefault();
         setError('');
-        setResult(null);
         setIsLoading(true);
 
         api.updateOrderStatus(id, status)
@@ -60,7 +59,7 @@ const OrderUpdateForm = () => {
             })
             .catch(error => {
                 console.error(error);
-                setError(error || 'Ошибка при создании заказа');
+                setError(error || 'Ошибка при редактировании заказа');
             })
             .finally(() => setIsLoading(false));
     };
