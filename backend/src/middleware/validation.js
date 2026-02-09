@@ -1,5 +1,6 @@
 import validator from 'validator';
 import AppValidationError from '../classes/AppValidationError.js';
+import * as uuid from 'uuid';
 
 const validate = ({ value, valueLabel = 'Поле', valueType = 'string' }) => {
     let errors = [];
@@ -73,10 +74,15 @@ const validateCreateOrder = (req, res, next) => {
     next();
 };
 
-const validateUpdateStatus = (req, res, next) => {
+const validateUpdateOrderStatus = (req, res, next) => {
+    const { id } = req.params;
     const { status } = req.body;
 
     let errors = [];
+
+    if (!uuid.validate(id)) {
+        errors.push(`Поле ID должно иметь корректный формат UUID`);
+    }
 
     errors.push(...validate({
         value: status,
@@ -96,7 +102,7 @@ const validateUpdateStatus = (req, res, next) => {
     next();
 };
 
-const validateStatusTransition = (currentStatus, newStatus) => {
+const isStatusTransitionValid = (currentStatus, newStatus) => {
     const transitions = {
         'new': ['processed', 'canceled'],
         'processed': ['canceled'],
@@ -108,8 +114,30 @@ const validateStatusTransition = (currentStatus, newStatus) => {
     }
 };
 
+const validateGetOrderById = (req, res, next) => {
+    let errors = [];
+
+    const { id } = req.params;
+
+    if (!isIdValid(id)) {
+        errors.push(`Поле ID должно иметь корректный формат UUID`);
+    }
+
+    if (errors.length) {
+        throw new AppValidationError({ message: errors.join('; ') });
+    }
+
+    next();
+}
+
+const isIdValid = (id) => {
+    return uuid.validate(id);
+}
+
 export default {
     validateCreateOrder,
-    validateUpdateStatus,
-    validateStatusTransition
+    validateUpdateOrderStatus,
+    isStatusTransitionValid,
+    validateGetOrderById,
+    isIdValid
 };

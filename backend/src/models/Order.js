@@ -76,7 +76,7 @@ class Order {
         const currentStatus = orders[0].status;
 
         // Проверяем валидность перехода статуса
-        validator.validateStatusTransition(currentStatus, status);
+        validator.isStatusTransitionValid(currentStatus, status);
 
         // Обновляем статус
         const [result] = await db.execute(

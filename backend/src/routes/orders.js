@@ -10,10 +10,12 @@ router.post('/orders',
 );
 
 router.get('/orders/:id',
+    validator.validateGetOrderById,
     orderController.getOrderById
 );
 
 router.patch('/orders/:id/status',
+    validator.validateUpdateOrderStatus,
     orderController.updateOrderStatus
 );
 

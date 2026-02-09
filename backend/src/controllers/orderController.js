@@ -47,13 +47,6 @@ export default {
             const { id } = req.params;
             const { status } = req.body;
 
-            if (id.length !== 36) {
-                throw new AppServerError({
-                    message: 'Некорректный ID заказа',
-                    code: 400,
-                });
-            }
-
             const currentOrder = await Order.findById(id);
             if (!currentOrder) {
                 throw new AppServerError({

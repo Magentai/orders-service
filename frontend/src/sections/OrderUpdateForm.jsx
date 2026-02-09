@@ -23,7 +23,6 @@ const OrderUpdateForm = () => {
 
         api.getOrderById(id)
             .then(response => {
-                console.log(response);
                 setResult({
                     id: response.id,
                     status: response.status,
@@ -47,7 +46,6 @@ const OrderUpdateForm = () => {
 
         api.updateOrderStatus(id, status)
             .then(response => {
-                console.log(response);
                 setResult({
                     id: response.id,
                     status: response.status,
@@ -74,10 +72,10 @@ const OrderUpdateForm = () => {
 
             <form onSubmit={ handleSearch }>
                 <div>
-                    <label htmlFor="id">ID заказа (обязательно)</label>
+                    <label htmlFor="id">ID заказа (обязательно)</label><br />
                     <input
                         id="id"
-                        value={id}
+                        value={ id }
                         onChange={ (event) => setId(event.target.value) }
                         required
                         placeholder="00000000-0000-0000-0000-000000000000"
@@ -95,15 +93,14 @@ const OrderUpdateForm = () => {
 
             { result?.status && result.status !== 'canceled' && <form onSubmit={ handleUpdate }>
                 <div>
-                    <label htmlFor="status">Новый статус заказа</label>
+                    <label htmlFor="status">Новый статус заказа</label><br />
                     <select
                         id="status"
                         name="status"
-                        defaultValue={ result.status }
                         value={ status }
                         onChange={ (event) => setStatus(event.target.value) }
                     >
-                        {transitions[result.status].map(item => <option value={item}>{item}</option>)}
+                        { transitions[result.status].map((item, index) => <option value={ item } key={ index }>{ item }</option>) }
                     </select>
                 </div>
 

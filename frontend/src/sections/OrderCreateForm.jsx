@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { api } from '../services/api';
-import './OrderCreateForm.css';
 import StatusDisplay from '../components/StatusDisplay';
+import './OrderCreateForm.css';
 
 const OrderCreateForm = () => {
     const [email, setEmail] = useState('');
@@ -49,11 +49,10 @@ const OrderCreateForm = () => {
 
         api.createOrder(orderData)
             .then(response => {
-                console.log(response);
                 setResult({
                     id: response.id,
                     status: response.status,
-                    customer_email: response.status,
+                    customer_email: response.customer_email,
                 })
             })
             .catch(error => {
@@ -71,7 +70,7 @@ const OrderCreateForm = () => {
 
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="email">Email клиента (обязательно)</label>
+                    <label htmlFor="email">Email клиента (обязательно)</label><br />
                     <input
                         type="email"
                         id="email"
@@ -84,35 +83,43 @@ const OrderCreateForm = () => {
 
                 <div>
                     <label>Состав заказа (обязательно)</label>
-                    <div>
+                    <div className="items-grid">
                         {items.map((item, index) => (
-                            <div key={index}>
+                            <div className="items-grid__row" key={index}>
                                 <input
                                     type="text"
                                     placeholder="SKU"
-                                    value={item.sku}
-                                    onChange={(event) => updateItem(index, 'sku', event.target.value)}
-                                    style={{ flex: 1 }}
+                                    value={ item.sku }
+                                    onChange={ (event) => updateItem(index, 'sku', event.target.value) }
+                                    style={ { flex: 1 } }
                                 />
                                 <input
                                     type="number"
                                     placeholder="Количество"
-                                    value={item.qty}
-                                    onChange={(event) => updateItem(index, 'qty', event.target.value)}
+                                    value={ item.qty }
+                                    onChange={ (event) => updateItem(index, 'qty', event.target.value) }
                                     min="1"
                                 />
-                                <button type="button" onClick={() => removeItem(index)} disabled={items.length === 1}>
+                                <button
+                                    type="button"
+                                    onClick={ () => removeItem(index) }
+                                    disabled={ items.length === 1 }>
                                     Удалить
                                 </button>
                             </div>
-                        ))}
-                        <button type="button" onClick={addItem}>
+                        )) }
+                        <button
+                            type="button"
+                            onClick={ addItem }>
                             + Добавить
                         </button>
                     </div>
                 </div>
 
-                <button type="submit" disabled={isLoading}>
+                <button
+                    className="submit-button"
+                    type="submit"
+                    disabled={ isLoading }>
                     Создать заказ
                 </button>
             </form>

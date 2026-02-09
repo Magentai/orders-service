@@ -15,21 +15,17 @@ const errorHandler = (err, req, res, next) => {
     }
 
     if (err instanceof AppServerError) {
-        res.status(500);
+        res.status(err.code ?? 500);
         res.send('Внутренняя ошибка сервера');
         return;
     }
 
-    if (!err.code || isNaN(err.code)) {
-        res.status(500);
-        res.send('Внутренняя ошибка сервера');
-        return;
-    } else {
+    if (err.code && !isNaN(err.code)) {
         res.status(err.code);
-        res.send(err.message);
-        return;
+    } else {
+        res.status(500);
     }
-
+    res.send(err.message ?? 'Внутренняя ошибка сервера');
 }
 
 export default errorHandler;

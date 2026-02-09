@@ -1,0 +1,14 @@
+.error-label {
+    color: #ff0000;
+}
+
+.order-data {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.order-data__title {
+    font-size: 24px;
+}

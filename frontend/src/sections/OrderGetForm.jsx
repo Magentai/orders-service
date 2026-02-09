@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { api } from '../services/api';
 import StatusDisplay from '../components/StatusDisplay';
-import './OrderGetForm.css';
 
 const OrderGetForm = () => {
     const [id, setId] = useState('');
@@ -17,7 +16,6 @@ const OrderGetForm = () => {
 
         api.getOrderById(id)
             .then(response => {
-                console.log(response);
                 setResult({
                     id: response.id,
                     status: response.status,
@@ -39,11 +37,11 @@ const OrderGetForm = () => {
 
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="id">ID заказа (обязательно)</label>
+                    <label htmlFor="id">ID заказа (обязательно)</label><br />
                     <input
                         id="id"
-                        value={id}
-                        onChange={(event) => setId(event.target.value)}
+                        value={ id }
+                        onChange={ (event) => setId(event.target.value) }
                         required
                         placeholder="00000000-0000-0000-0000-000000000000"
                     />
