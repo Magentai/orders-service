@@ -60,6 +60,33 @@ class Order {
             items: items
         };
     }
+
+    static async updateStatus(id, status) {
+        // Получаем текущий статус
+        const [orders] = await db.execute(
+            'SELECT status FROM `order` WHERE id = ?',
+            [id]
+        );
+
+        if (orders.length === 0) {
+            return null;
+        }
+
+        const currentStatus = orders[0].status;
+
+        // Обновляем статус
+        const [result] = await db.execute(
+            'UPDATE `order` SET status = ? WHERE id = ?',
+            [status, id]
+        );
+
+        if (result.affectedRows === 0) {
+            return null;
+        }
+
+        // Получаем обновленный заказ
+        return await this.findById(id);
+    }
 }
 
 export default Order;

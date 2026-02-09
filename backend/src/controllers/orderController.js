@@ -21,7 +21,6 @@ export default {
         try {
             const { id } = req.params;
 
-            const orderId = parseInt(id);
             if (id.length !== 36) {
                 throw new AppServerError({
                     message: 'Некорректный ID заказа',
@@ -29,7 +28,7 @@ export default {
                 });
             }
 
-            const order = await Order.findById(orderId);
+            const order = await Order.findById(id);
 
             if (!order) {
                 throw new AppServerError({
@@ -38,13 +37,43 @@ export default {
                 });
             }
 
-            res.status(200).json({
-                ok: true,
-                order
-            });
+            res.status(200).json(order);
         } catch (error) {
-            console.log(error)
             next(error);
         }
     },
+    updateOrderStatus: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const { status } = req.body;
+
+            if (id.length !== 36) {
+                throw new AppServerError({
+                    message: 'Некорректный ID заказа',
+                    code: 400,
+                });
+            }
+
+            const currentOrder = await Order.findById(id);
+            if (!currentOrder) {
+                throw new AppServerError({
+                    message: 'Заказ не найден',
+                    code: 400,
+                });
+            }
+
+            const updatedOrder = await Order.updateStatus(id, status);
+
+            if (!updatedOrder) {
+                throw new AppServerError({
+                    message: 'Ошибка при обновлении заказа',
+                    code: 500,
+                });
+            }
+
+            res.status(200).json(updatedOrder);
+        } catch (error) {
+            next(error);
+        }
+    }
 }

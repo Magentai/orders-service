@@ -5,7 +5,7 @@ const errorHandler = (err, req, res, next) => {
         return next(err);
     }
 
-    if (err.code === 500) {
+    if (err.code === 500 || !err.code || isNaN(err.code)) {
         res.status(500);
         res.send('Внутренняя ошибка сервера');
     }

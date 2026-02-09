@@ -8,7 +8,7 @@ function App() {
         <div className="App">
             <OrderCreateForm />
             <OrderGetForm />
-            {/*<OrderUpdateForm />*/}
+            <OrderUpdateForm />
         </div>
     );
 }

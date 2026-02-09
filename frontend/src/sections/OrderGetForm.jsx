@@ -19,9 +19,9 @@ const OrderGetForm = () => {
             .then(response => {
                 console.log(response);
                 setResult({
-                    id: response.order.id,
-                    status: response.order.status,
-                    customer_email: response.order.customer_email,
+                    id: response.id,
+                    status: response.status,
+                    customer_email: response.customer_email,
                 })
             })
             .catch(error => {

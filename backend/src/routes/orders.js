@@ -11,4 +11,8 @@ router.get('/orders/:id',
     orderController.getOrderById
 );
 
+router.patch('/orders/:id/status',
+    orderController.updateOrderStatus
+);
+
 export default router;

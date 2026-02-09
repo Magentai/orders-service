@@ -32,8 +32,8 @@ const OrderCreateForm = () => {
         setItems(newItems);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         setError('');
         setResult(null);
         setIsLoading(true);

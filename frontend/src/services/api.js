@@ -10,7 +10,7 @@ export const api = {
             body: JSON.stringify(data)
         });
 
-        if (!response.ok) {
+        if (response.status !== 200) {
             throw await response.text();
         }
 
@@ -19,10 +19,26 @@ export const api = {
     async getOrderById(id) {
         const response = await fetch(`${API_BASE_URL}/orders/${id}`);
 
-        if (!response.ok) {
+        if (response.status !== 200) {
             throw await response.text();
         }
 
         return await response.json();
     },
+    async updateOrderStatus(id, status) {
+        const response = await fetch(`${API_BASE_URL}/orders/${id}/status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status })
+        });
+
+        if (response.status !== 200) {
+            const error = await response.text();
+            throw error;
+        }
+
+        return await response.json();
+    }
 };
