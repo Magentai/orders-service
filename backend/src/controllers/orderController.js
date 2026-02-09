@@ -10,8 +10,10 @@ export default {
 
             res.status(200).json({
                 ok: true,
-                id: order.id,
-                status: order.status
+                data: {
+                    id: order.id,
+                    status: order.status
+                }
             });
         } catch (error) {
             next(error);
@@ -37,7 +39,16 @@ export default {
                 });
             }
 
-            res.status(200).json(order);
+            res.status(200).json({
+                ok: true,
+                data: {
+                    id: order.id,
+                    customer_email: order.customer_email,
+                    status: order.status,
+                    created_at: order.created_at,
+                    items: order.items
+                }
+            });
         } catch (error) {
             next(error);
         }
@@ -64,7 +75,16 @@ export default {
                 });
             }
 
-            res.status(200).json(updatedOrder);
+            res.status(200).json({
+                ok: true,
+                data: {
+                    id: updatedOrder.id,
+                    customer_email: updatedOrder.customer_email,
+                    status: updatedOrder.status,
+                    created_at: updatedOrder.created_at,
+                    items: updatedOrder.items
+                }
+            });
         } catch (error) {
             next(error);
         }

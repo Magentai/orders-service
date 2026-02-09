@@ -17,9 +17,11 @@ const OrderGetForm = () => {
         api.getOrderById(id)
             .then(response => {
                 setResult({
-                    id: response.id,
-                    status: response.status,
-                    customer_email: response.customer_email,
+                    id: response.data.id,
+                    status: response.data.status,
+                    customer_email: response.data.customer_email,
+                    items: response.data.items,
+                    created_at: response.data.created_at,
                 })
             })
             .catch(error => {
