@@ -2,6 +2,7 @@ import validator from 'validator';
 import AppValidationError from '../classes/AppValidationError.js';
 import * as uuid from 'uuid';
 
+// Базовая проверка
 const validate = ({ value, valueLabel = 'Поле', valueType = 'string' }) => {
     let errors = [];
 
@@ -16,6 +17,7 @@ const validate = ({ value, valueLabel = 'Поле', valueType = 'string' }) => {
     return errors;
 }
 
+// Проверка запроса создания заказа
 const validateCreateOrder = (req, res, next) => {
     const { customer_email, items } = req.body;
 
@@ -74,6 +76,7 @@ const validateCreateOrder = (req, res, next) => {
     next();
 };
 
+// Проверка запроса обновления статуса заказа
 const validateUpdateOrderStatus = (req, res, next) => {
     const { id } = req.params;
     const { status } = req.body;
@@ -102,6 +105,7 @@ const validateUpdateOrderStatus = (req, res, next) => {
     next();
 };
 
+// Метод для проверки перехода статуса
 const isStatusTransitionValid = (currentStatus, newStatus) => {
     const transitions = {
         'new': ['processed', 'canceled'],
@@ -114,6 +118,7 @@ const isStatusTransitionValid = (currentStatus, newStatus) => {
     }
 };
 
+// Проверка запроса получения заказа по ID
 const validateGetOrderById = (req, res, next) => {
     let errors = [];
 
@@ -130,6 +135,7 @@ const validateGetOrderById = (req, res, next) => {
     next();
 }
 
+// Метод для проверки ID
 const isIdValid = (id) => {
     return uuid.validate(id);
 }

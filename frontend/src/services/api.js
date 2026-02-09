@@ -11,7 +11,7 @@ export const api = {
         });
 
         if (response.status !== 200) {
-            throw await response.text();
+            throw await response.json();
         }
 
         return await response.json();
@@ -20,7 +20,7 @@ export const api = {
         const response = await fetch(`${API_BASE_URL}/orders/${id}`);
 
         if (response.status !== 200) {
-            throw await response.text();
+            throw await response.json();
         }
 
         return await response.json();
@@ -35,8 +35,7 @@ export const api = {
         });
 
         if (response.status !== 200) {
-            const error = await response.text();
-            throw error;
+            throw await response.json();
         }
 
         return await response.json();

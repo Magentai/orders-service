@@ -4,7 +4,7 @@ import './StatusDisplay.css';
 const StatusDisplay = ({ error, result }) => {
     return (
         <>
-            {error && <div className="error-label">{error}</div>}
+            {error && <div className="error-label">{error.message}</div>}
 
             {result && (
                 <section className="order-data">

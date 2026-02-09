@@ -43,10 +43,6 @@ const OrderCreateForm = () => {
             items: items.filter(item => item.sku.trim() !== '')
         };
 
-        if (orderData.items.length === 0) {
-            throw { message: 'Заполните хотя бы один SKU' };
-        }
-
         api.createOrder(orderData)
             .then(response => {
                 setResult({
@@ -57,7 +53,7 @@ const OrderCreateForm = () => {
             })
             .catch(error => {
                 console.error(error);
-                setError(error || 'Ошибка при создании заказа');
+                setError(error || { message: 'Ошибка при создании заказа' });
             })
             .finally(() => setIsLoading(false));
     };

@@ -10,13 +10,21 @@ const errorHandler = (err, req, res, next) => {
 
     if (err instanceof AppValidationError) {
         res.status(400);
-        res.send(err.message);
+        res.send({
+            "ok": false,
+            "error_code": 1001,
+            message: err.message
+        });
         return;
     }
 
     if (err instanceof AppServerError) {
         res.status(err.code ?? 500);
-        res.send('Внутренняя ошибка сервера');
+        res.send({
+            "ok": false,
+            "error_code": 1002,
+            message: 'Внутренняя ошибка сервера'
+        });
         return;
     }
 
@@ -25,7 +33,11 @@ const errorHandler = (err, req, res, next) => {
     } else {
         res.status(500);
     }
-    res.send(err.message ?? 'Внутренняя ошибка сервера');
+    res.send({
+        "ok": false,
+        "error_code": 1003,
+        message: err.message ?? 'Внутренняя ошибка сервера'
+    });
 }
 
 export default errorHandler;
